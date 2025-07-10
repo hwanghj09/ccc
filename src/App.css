@@ -1,0 +1,248 @@
+/* Global Box Sizing */
+* {
+  box-sizing: border-box;
+}
+
+html {
+    height: 100%; /* 높이는 그대로 둡니다 */
+    width: 100vw; /* 뷰포트 너비의 100% */
+    background-color: rgba(255, 255, 0, 0.3); /* html 임시 배경색: 노란색 */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    min-height: 100%; /* 높이는 그대로 둡니다 */
+    width: 100vw; /* 뷰포트 너비의 100% */
+    background-color: rgba(0, 255, 255, 0.3); /* body 임시 배경색: 청록색 */
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.character-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.character {
+    text-align: center;
+}
+
+.character img {
+    max-width: 100%;
+    height: auto;
+}
+
+.nav {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 20px auto; /* 내비게이션 바 자체를 중앙 정렬 */
+    width: 100%; /* 내비게이션 바가 부모의 전체 너비를 차지하도록 */
+    background-color: rgba(0, 255, 0, 0.3); /* nav 임시 배경색: 초록색 */
+}
+
+.nav a {
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color:rgb(111, 111, 111);
+    text-decoration: none;
+    font-size: 18px;
+    padding: 10px;
+}
+
+.nav a:hover {
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: #fff;
+}
+
+.nav a.active {
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: #fff;
+    text-shadow: 0 0 8px white;
+}
+
+.content-section {
+    padding: 20px;
+    margin-bottom: 30px;
+    text-align: center;
+    width: 100%;
+}
+
+.character-profiles {
+    display: grid;
+    padding: 20px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+
+.profile {
+    text-align: center;
+}
+
+.profile img {
+    width: 75%;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.social-links a {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+}
+
+.question-mark-container {
+    display: grid;
+    gap: 20px;
+}
+
+.question-box {
+    max-width: 200%;
+    background-color: rgba(20, 20, 40, 0);
+    border: 2px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 48px;
+    cursor: pointer;
+}
+
+.footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    font-size: 14px;
+}
+
+.container {
+    width: 100%;
+    margin: 0 auto; /* 좌우 여백을 자동으로 설정하여 중앙 정렬 */
+    background-color: rgba(255, 0, 0, 0.3); /* container 임시 배경색: 빨간색 */
+}
+
+/* Notice Form Styles */
+.notice-form {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  margin: 30px auto;
+  text-align: left;
+}
+
+.notice-form h3 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #007bff;
+  font-size: 1.8em;
+}
+
+.notice-form input[type="text"],
+.notice-form textarea {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  font-size: 1.1em;
+  box-sizing: border-box;
+}
+
+.notice-form textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.notice-form button {
+  width: 100%;
+  padding: 12px 15px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.notice-form button:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+}
+
+.notice-form button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Notice List Styles */
+.notice-list {
+  margin-top: 40px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.notice-item {
+  background-color: #fff;
+  padding: 25px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  transition: transform 0.2s ease;
+}
+
+.notice-item:hover {
+  transform: translateY(-5px);
+}
+
+.notice-item h3 {
+  margin-top: 0;
+  color: #007bff;
+  font-size: 1.6em;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.notice-item p {
+  color: #555;
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+
+.notice-item .notice-date {
+  font-size: 0.9em;
+  color: #777;
+  text-align: right;
+  margin-top: 15px;
+}
+
+/* Responsive adjustments for notice section */
+@media (max-width: 768px) {
+  .notice-form, .notice-list {
+    padding: 20px;
+    margin: 20px auto;
+  }
+}
