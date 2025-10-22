@@ -1,23 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Routes, Link, useLocation } from 'react-router-dom';
 import './App.css'; // Import the CSS
-import { supabase } from './supabaseClient';
-import Auth from './components/Auth';
-import NoticeForm from './components/NoticeForm';
-
-interface SupabaseSession {
-  access_token: string;
-  refresh_token: string;
-  expires_in: number;
-  expires_at: number;
-  token_type: string;
-  user: {
-    id: string;
-    aud: string;
-    email: string;
-    // 필요한 경우 다른 사용자 속성 추가
-  };
-}
 
 // Define page titles and background images
 const pageTitles: { [key: string]: string } = {
@@ -35,13 +18,9 @@ const backgroundImages: { [key: string]: string } = {
 };
 
 // Navigation component
-const Navigation: React.FC<{ session: SupabaseSession | null }> = ({ session }) => {
+const Navigation: React.FC = () => {
   const location = useLocation();
   const currentPage = location.pathname.substring(1) || 'home'; // Get current page from URL
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-  };
 
   return (
     <nav className="nav">
@@ -49,7 +28,6 @@ const Navigation: React.FC<{ session: SupabaseSession | null }> = ({ session }) 
       <Link to="/members" className={currentPage === 'members' ? 'active' : ''}>Members</Link>
       <Link to="/museum" className={currentPage === 'museum' ? 'active' : ''}>Museum</Link>
       <Link to="/notice" className={currentPage === 'notice' ? 'active' : ''}>Notice</Link>
-      {session && <button onClick={handleLogout}>Logout</button>}
     </nav>
   );
 };
@@ -89,7 +67,6 @@ const MembersPage: React.FC = () => {
           <div className="social-links">
             <a href="https://www.instagram.com/sangsi3679/?utm_source=ig_web_button_share_sheet"><img src="images/멤버/인스타 로고.png" alt="Instagram" /></a>
             <a href="https://www.youtube.com/@asr-t3z6m"><img src="images/멤버/유튜브 로고.png" alt="YouTube" /></a>
-            <a href="https://x.com/aga04743744264?s=21&fbclid=PAZXh0bgNhZW0CMTEAAaeuIqNO6lunb3A2khlAmsqnFeU7B4x9HExlzzK_0WD8624BzctPN4NE09oxzQ_aem_722XsFPQHpRA8-VkhGvuSA"><img src="images/멤버/X 로고.png" alt="Twitter" /></a>
           </div>
         </div>
         <div className="profile">
@@ -161,84 +138,16 @@ const MuseumPage: React.FC = () => {
 };
 
 // Notice Page Component
-const NoticePage: React.FC<{ session: SupabaseSession | null }> = ({ session }) => {
-  const [notices, setNotices] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchNotices();
-    const subscription = supabase
-      .channel('public:notices')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'notices' }, payload => {
-        fetchNotices(); // Refetch notices on any change
-      })
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(subscription);
-    };
-  }, []);
-
-  const fetchNotices = async () => {
-    setLoading(true);
-    console.log('공지 불러오기 시작...');
-    const { data, error } = await supabase
-      .from('notices')
-      .select('*')
-      .order('created_at', { ascending: false });
-
-    if (error) {
-      console.error('공지 불러오기 오류:', error.message);
-      console.log('에러 발생!', error);
-    } else {
-      console.log('공지 불러오기 성공:', data);
-      setNotices(data || []);
-    }
-    setLoading(false);
-  };
-
+const NoticePage: React.FC = () => {
   return (
     <div id="notice" className="content-section">
       <h2>공지</h2>
-      {session && <NoticeForm />}
-      {loading ? (
-        <p>공지 불러오는 중...</p>
-      ) : (
-        <div className="notice-list">
-          {notices.length > 0 ? (
-            notices.map((notice) => (
-              <div key={notice.id} className="notice-item">
-                <h3>{notice.title}</h3>
-                <p>{notice.content}</p>
-                <p className="notice-date">{new Date(notice.created_at).toLocaleString()}</p>
-              </div>
-            ))
-          ) : (
-            <p>등록된 공지가 없습니다.</p>
-          )}
-        </div>
-      )}
+      <p>등록된 공지가 없습니다.</p>
     </div>
   );
 };
 
 const App: React.FC = () => {
-  const [session, setSession] = useState<SupabaseSession | null>(null);
-  const [loadingSession, setLoadingSession] = useState(true);
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setLoadingSession(false);
-    });
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
   const location = useLocation(); // use useLocation hook here
   const currentPage = location.pathname.substring(1) || 'home';
 
@@ -249,25 +158,17 @@ const App: React.FC = () => {
     document.body.style.backgroundAttachment = 'fixed'; // Keep background fixed
   }, [currentPage]);
 
-  if (loadingSession) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className="container">
-      {!session ? (
-        <Auth />
-      ) : (
-        <>
-          <Navigation session={session} />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/members" element={<MembersPage />} />
-            <Route path="/museum" element={<MuseumPage />} />
-            <Route path="/notice" element={<NoticePage session={session} />} />
-          </Routes>
-        </>
-      )}
+      <>
+        <Navigation />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/members" element={<MembersPage />} />
+          <Route path="/museum" element={<MuseumPage />} />
+          <Route path="/notice" element={<NoticePage />} />
+        </Routes>
+      </>
     </div>
   );
 };

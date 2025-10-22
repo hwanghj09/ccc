@@ -244,3 +244,94 @@ body {
     margin: 20px auto;
   }
 }
+
+/* Auth Form Styles */
+.auth-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 100px); /* Adjust based on header/footer if any */
+  padding: 20px;
+}
+
+.form-widget {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 400px; /* Max width for the form */
+  text-align: center;
+}
+
+.form-widget .header {
+  color: #007bff;
+  font-size: 2.5em;
+  margin-bottom: 15px;
+}
+
+.form-widget .description {
+  color: #555;
+  font-size: 1.1em;
+  margin-bottom: 30px;
+}
+
+.inputField {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  font-size: 1.1em;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.inputField:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.button {
+  width: 100%;
+  padding: 12px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: 10px; /* Space between buttons */
+}
+
+.button.block + .button.block {
+  margin-top: 15px; /* More space between stacked buttons */
+}
+
+.button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Adjustments for the Auth component's main div */
+.row.flex.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh; /* Take full viewport height */
+}
+
+.col-6 {
+  /* This class might be from a grid system, ensure it doesn't conflict */
+  /* If it's causing issues, we might need to remove it or adjust its width */
+  width: 100%; /* Ensure it takes full width within its flex container */
+  max-width: 400px; /* Match form-widget max-width */
+}
